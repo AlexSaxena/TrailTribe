@@ -24,16 +24,38 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(int id)
+    public async Task<ActionResult<object>> GetUser(int id)
     {
-        var user = await _context.Users.FindAsync(id);
+        var user = await _context.Users
+            .Include(u => u.Favorites)
+            .ThenInclude(f => f.Trail)
+            .FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
         {
             return NotFound();
         }
         
-        return user;
+        var result = new
+        {
+            user.Id,
+            user.Name,
+            Favorites = user.Favorites.Select(f => new
+            {
+                f.TrailId,
+                f.Trail.Title,
+                f.Trail.Description,
+                f.Trail.Length,
+                BBox = new
+                {
+                    SouthWest = new { f.Trail.BBoxSouthWestLat, f.Trail.BBoxSouthWestLng },
+                    NorthEast = new { f.Trail.BBoxNorthEastLat, f.Trail.BBoxNorthEastLng }
+                },
+                f.Trail.Nodes
+            })
+        };
+
+        return result;
     }
 
     [HttpPost]
