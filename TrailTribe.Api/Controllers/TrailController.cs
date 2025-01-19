@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrailTribe.Api.Data;
+using TrailTribe.Api.Dto;
 using TrailTribe.Api.Models;
 
 namespace TrailTribe.Api.Controllers;
@@ -36,8 +37,20 @@ public class TrailController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Trail>> PostTrail(Trail trail)
+    public async Task<ActionResult<Trail>> PostTrail(TrailDto trailDto)
     {
+        var trail = new Trail
+        {
+            Title = trailDto.Title,
+            Description = trailDto.Description,
+            TrailId = trailDto.TrailId,
+            Length = trailDto.Length,
+            BBoxSouthWestLat = trailDto.BBoxSouthWestLat,
+            BBoxSouthWestLng = trailDto.BBoxSouthWestLng,
+            BBoxNorthEastLat = trailDto.BBoxNorthEastLat,
+            BBoxNorthEastLng = trailDto.BBoxNorthEastLng,
+            Nodes = trailDto.Nodes
+        };
         _context.Trails.Add(trail);
         await _context.SaveChangesAsync();
 
