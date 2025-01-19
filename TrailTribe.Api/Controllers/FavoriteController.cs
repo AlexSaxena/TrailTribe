@@ -21,4 +21,22 @@ public class FavoriteController : ControllerBase
     {
         return await _context.Favorites.Include(f => f.Trail).ToListAsync();
     }
+    
+    [HttpGet("user/{userId}")]
+    public async Task<ActionResult<IEnumerable<Favorite>>> GetFavoritesByUser(int userId)
+    {
+        var favorites = await _context.Favorites
+            .Where(f => f.UserId == userId)
+            .Include(f => f.Trail)
+            .ToListAsync();
+
+        if (!favorites.Any())
+        {
+            return NotFound("No favorites found for this user.");
+        }
+
+        return favorites;
+    }
+    
+    
 }
