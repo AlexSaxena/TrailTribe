@@ -10,8 +10,8 @@ namespace TrailTribe.Api.Controllers;
 public class TrailController : ControllerBase
 {
     readonly TrailTribeContext _context;
-   
-    public TrailController( TrailTribeContext context)
+
+    public TrailController(TrailTribeContext context)
     {
         _context = context;
     }
@@ -20,5 +20,43 @@ public class TrailController : ControllerBase
     public async Task<ActionResult<IEnumerable<Trail>>> GetTrails()
     {
         return await _context.Trails.ToListAsync();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Trail>> GetTrail(int id)
+    {
+        var trail = await _context.Trails.FindAsync(id);
+
+        if (trail == null)
+        {
+            return NotFound();
+        }
+
+        return trail;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Trail>> PostTrail(Trail trail)
+    {
+        _context.Trails.Add(trail);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetTrail), new { id = trail.Id }, trail);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteTrail(int id)
+    {
+        var trail = await _context.Trails.FindAsync(id);
+
+        if (trail == null)
+        {
+            return NotFound();
+        }
+
+        _context.Trails.Remove(trail);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }
