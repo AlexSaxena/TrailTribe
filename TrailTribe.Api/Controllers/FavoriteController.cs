@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrailTribe.Api.Data;
+using TrailTribe.Api.Dto;
 using TrailTribe.Api.Models;
 
 namespace TrailTribe.Api.Controllers;
@@ -36,6 +37,29 @@ public class FavoriteController : ControllerBase
         }
 
         return favorites;
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult<Favorite>> PostFavorite(FavoriteDto favoriteDto)
+    {
+        var existingFavorite = await _context.Favorites
+            .FirstOrDefaultAsync(f => f.UserId == favoriteDto.UserId && f.TrailId == favoriteDto.TrailId);
+
+        if (existingFavorite != null)
+        {
+            return Conflict("This trail is already in the user's favorites.");
+        }
+        
+        var favorite = new Favorite
+        {
+            UserId = favoriteDto.UserId,
+            TrailId = favoriteDto.TrailId
+        };
+
+        _context.Favorites.Add(favorite);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetFavoritesByUser), new { userId = favorite.UserId }, favorite);
     }
     
     [HttpDelete("{id}")]
