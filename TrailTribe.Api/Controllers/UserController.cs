@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TrailTribe.Api.Data;
+using TrailTribe.Api.Dto;
 using TrailTribe.Api.Models;
 
 namespace TrailTribe.Api.Controllers;
@@ -36,12 +37,17 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<User>> PostUser(User user)
+    public async Task<ActionResult<User>> PostUser(UserDto userDto)
     {
+        var user = new User
+        {
+            Name = userDto.Name,
+            Password = userDto.Password
+        };
+
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
-        
+
         return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
-        
     }
 }
