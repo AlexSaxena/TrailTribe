@@ -38,5 +38,19 @@ public class FavoriteController : ControllerBase
         return favorites;
     }
     
-    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteFavorite(int id)
+    {
+        var favorite = await _context.Favorites.FindAsync(id);
+
+        if (favorite == null)
+        {
+            return NotFound();
+        }
+
+        _context.Favorites.Remove(favorite);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
