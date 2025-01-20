@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import Map from "../components/Map";
 
 export const Route = createFileRoute("/trailDetails")({
   component: TrailDetails,
@@ -9,13 +10,12 @@ type Trail = {
   id: number;
   title: string;
   description: string;
+  trailId: string;
   length: number;
-  bbox: {
-    southWestLat: number;
-    southWestLng: number;
-    northEastLat: number;
-    northEastLng: number;
-  };
+  bBoxSouthWestLat: number;
+  bBoxSouthWestLng: number;
+  bBoxNorthEastLat: number;
+  bBoxNorthEastLng: number;
   nodes: string[];
 };
 
@@ -49,9 +49,13 @@ function TrailDetails() {
       </p>
       <div className="mt-4">
         <h2 className="text-xl font-bold">Map Section</h2>
-        <div className="w-full h-64 bg-gray-300 rounded-lg">
-          Map Placeholder
-        </div>
+        <Map
+          southWestLat={trail.bBoxSouthWestLat}
+          southWestLng={trail.bBoxSouthWestLng}
+          northEastLat={trail.bBoxNorthEastLat}
+          northEastLng={trail.bBoxNorthEastLng}
+          nodes={trail.nodes}
+        />
       </div>
     </div>
   );
