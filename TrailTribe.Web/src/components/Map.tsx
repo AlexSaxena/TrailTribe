@@ -57,7 +57,6 @@ const Map: React.FC<MapProps> = ({
 
   return (
     <div>
-      <p>hello</p>
       <div
         ref={mapContainerRef}
         style={{ height: "500px", width: "100%", marginTop: "20px" }}
