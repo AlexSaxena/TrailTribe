@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import Map from "../components/Map";
-import MountainTrail from "/MountainTrail.jpg"; // Example image import
+import MountainTrail from "/MountainTrail.jpg";
 
 export const Route = createFileRoute("/trailDetails")({
   component: TrailDetails,
