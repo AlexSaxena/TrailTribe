@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 export const Route = createRootRoute({
   component: () => (
-    <div className="flex flex-col min-h-screen text-dark">
+    <div className="flex flex-col min-h-screen text-dark  bg-secondary">
       <Header />
       <main className="flex-grow container mx-auto py-6 px-4 text-dark rounded-md">
         <Outlet />
