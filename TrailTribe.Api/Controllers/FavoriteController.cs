@@ -16,13 +16,13 @@ public class FavoriteController : ControllerBase
     {
         _context = context;
     }
-    
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Favorite>>> GetFavorites()
     {
         return await _context.Favorites.Include(f => f.Trail).ToListAsync();
     }
-    
+
     [HttpGet("user/{userId}")]
     public async Task<ActionResult<IEnumerable<Favorite>>> GetFavoritesByUser(int userId)
     {
@@ -38,7 +38,7 @@ public class FavoriteController : ControllerBase
 
         return favorites;
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<Favorite>> PostFavorite(FavoriteDto favoriteDto)
     {
@@ -49,7 +49,7 @@ public class FavoriteController : ControllerBase
         {
             return Conflict("This trail is already in the user's favorites.");
         }
-        
+
         var favorite = new Favorite
         {
             UserId = favoriteDto.UserId,
@@ -61,15 +61,16 @@ public class FavoriteController : ControllerBase
 
         return CreatedAtAction(nameof(GetFavoritesByUser), new { userId = favorite.UserId }, favorite);
     }
-    
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteFavorite(int id)
+
+    [HttpDelete("user/{userId}/trail/{trailId}")]
+    public async Task<IActionResult> DeleteFavorite(int userId, int trailId)
     {
-        var favorite = await _context.Favorites.FindAsync(id);
+        var favorite = await _context.Favorites
+            .FirstOrDefaultAsync(f => f.UserId == userId && f.TrailId == trailId);
 
         if (favorite == null)
         {
-            return NotFound();
+            return NotFound("Favorite not found.");
         }
 
         _context.Favorites.Remove(favorite);
@@ -77,4 +78,5 @@ public class FavoriteController : ControllerBase
 
         return NoContent();
     }
+
 }
