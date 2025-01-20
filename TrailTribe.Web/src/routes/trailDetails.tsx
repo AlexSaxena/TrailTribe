@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import Map from "../components/Map";
+import MountainTrail from "/MountainTrail.jpg"; // Example image import
 
 export const Route = createFileRoute("/trailDetails")({
   component: TrailDetails,
@@ -41,14 +42,29 @@ function TrailDetails() {
   }
 
   return (
-    <div className="mt-4">
-      <h1 className="text-2xl font-bold">{trail.title}</h1>
-      <p className="mt-2">{trail.description}</p>
-      <p className="mt-2">
-        <strong>Length:</strong> {trail.length} km
-      </p>
-      <div className="mt-4">
-        <h2 className="text-xl font-bold">Map Section</h2>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-1 items-center mt-4 px-6">
+      <div className="flex flex-col space-y-6 items-center text-center">
+        <h1 className="text-3xl font-extrabold text-green-800">
+          {trail.title}
+        </h1>
+        <p className="text-lg text-gray-700">{trail.description}</p>
+        <p className="text-base">
+          <strong>Length:</strong> {trail.length} km
+        </p>
+        <p className="text-base">
+          <strong>Difficulty:</strong> Level 5
+        </p>
+        <img
+          src={MountainTrail}
+          alt={trail.title}
+          className="w-full max-w-lg h-auto rounded-lg shadow-lg mx-auto border border-gray-200"
+        />
+      </div>
+
+      <div className="h-full">
+        <h2 className="text-3xl font-bold mb-4 text-green-800 text-center">
+          Trail Map
+        </h2>
         <Map
           southWestLat={trail.bBoxSouthWestLat}
           southWestLng={trail.bBoxSouthWestLng}
