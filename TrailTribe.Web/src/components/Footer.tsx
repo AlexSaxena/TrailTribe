@@ -40,7 +40,7 @@ function Footer() {
         </p>
 
         <span className="block text-sm text-center">
-          © 2024
+          © 2025&nbsp;
           <Link to="/" className="hover:underline">
             Trail Tribe™
           </Link>
