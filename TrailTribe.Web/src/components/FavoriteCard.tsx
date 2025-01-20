@@ -1,18 +1,27 @@
 import { Link } from "@tanstack/react-router";
+import forestTrail from "/ForestTrail.jpg";
+import MountainTrail from "/MountainTrail.jpg";
+import LakeSideTrail from "/TrailLakeSide.jpg";
 
 type FavoriteCardProps = {
   id: string;
   title: string;
   description: string;
-  image: string;
 };
+
+const randomImages = [forestTrail, MountainTrail, LakeSideTrail];
 
 const FavoriteCard: React.FC<FavoriteCardProps> = ({
   id,
   title,
   description,
-  image,
 }) => {
+  const image = randomImages[Math.floor(Math.random() * randomImages.length)];
+
+  const handleRemove = () => {
+    alert(`Removed trail ${title} from favorites`);
+  };
+  console.log(title);
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <img
@@ -35,7 +44,7 @@ const FavoriteCard: React.FC<FavoriteCardProps> = ({
             View Details
           </Link>
           <button
-            onClick={() => alert(`Removed trail ${id} from favorites`)}
+            onClick={handleRemove}
             className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800"
           >
             Remove
