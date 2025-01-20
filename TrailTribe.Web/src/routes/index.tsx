@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { ShieldCheck, Users, MapPin, Compass } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -20,31 +21,57 @@ function Index() {
           <div className="flex gap-4">
             <Link
               to="/trails"
-              className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg"
+              className="px-6 py-3 hover:bg-dark bg-green-700 text-white font-medium rounded-lg"
             >
               Explore Trails
             </Link>
-            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg">
+            <button className="px-6 py-3 bg-primary hover:bg-orange-700 text-white font-medium rounded-lg">
               Sign Up
             </button>
           </div>
         </div>
       </section>
 
-      <section className="mt-5 py-6 bg-gray-100 text-center">
-        <h2 className="text-3xl font-bold mb-6">Why TrailTribe?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Explore Trails</h3>
-            <p>Find the best hiking trails in your area or worldwide.</p>
+      <section className="container mx-auto px-6 py-12 text-center">
+        <h2 className="text-3xl font-bold mb-8 underline underline-offset-8 text-primary">
+          Why Trail Tribe?
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center">
+            <ShieldCheck className="h-12 w-12 text-accent dark:text-accent mb-4" />
+            <h3 className="text-xl font-semibold mb-2 dark:text-white">
+              Secure Favorites
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Save your favorite trails privately and access them anytime.
+            </p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Save Favorites</h3>
-            <p>Keep a list of your favorite trails and access them anytime.</p>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center">
+            <Users className="h-12 w-12 text-accent dark:text-accent mb-4" />
+            <h3 className="text-xl font-semibold mb-2 dark:text-white">
+              Buddy System
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Find and hike with like-minded trail enthusiasts.
+            </p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-semibold mb-4">Plan Adventures</h3>
-            <p>Get inspired and plan your next hiking trip with ease.</p>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center">
+            <MapPin className="h-12 w-12 text-primary dark:text-primary mb-4" />
+            <h3 className="text-xl font-semibold mb-2 dark:text-white">
+              Explore Top Trails
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Discover the most scenic and adventurous trails worldwide.
+            </p>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center">
+            <Compass className="h-12 w-12 text-primary dark:text-primary mb-4" />
+            <h3 className="text-xl font-semibold mb-2 dark:text-white">
+              Plan Your Adventures
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              Use our tools to prepare for your next hiking experience.
+            </p>
           </div>
         </div>
       </section>
