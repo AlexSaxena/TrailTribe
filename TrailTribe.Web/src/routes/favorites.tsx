@@ -20,12 +20,6 @@ type Favorite = {
   nodes: string[];
 };
 
-type ApiResponse = {
-  id: number;
-  name: string;
-  favorites: Favorite[];
-};
-
 function Favorites() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,7 +30,7 @@ function Favorites() {
       try {
         const response = await fetch("http://localhost:5127/api/User/1");
         if (!response.ok) throw new Error("Failed to fetch favorites.");
-        const data: ApiResponse = await response.json();
+        const data = await response.json();
         setFavorites(data.favorites);
       } catch (err: unknown) {
         setError(
@@ -50,6 +44,25 @@ function Favorites() {
     fetchFavorites();
   }, []);
 
+  const handleRemoveFavorite = async (userId: number, trailId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5127/api/Favorite/user/${userId}/trail/${trailId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to remove favorite.");
+
+      setFavorites((prevFavorites) =>
+        prevFavorites.filter((favorite) => favorite.trailId !== trailId)
+      );
+    } catch (error) {
+      console.error("Error removing favorite:", error);
+    }
+  };
+
   if (loading) {
     return <div className="text-center mt-6">Loading favorites...</div>;
   }
@@ -62,8 +75,6 @@ function Favorites() {
     );
   }
 
-  console.log(favorites);
-
   return (
     <div className="mt-4">
       <h1 className="text-3xl font-bold mb-6 text-center">My Favorites</h1>
@@ -75,6 +86,7 @@ function Favorites() {
               id={favorite.trailId.toString()}
               title={favorite.title}
               description={favorite.description}
+              onRemoveFavorite={() => handleRemoveFavorite(1, favorite.trailId)}
             />
           ))}
         </div>
@@ -94,3 +106,5 @@ function Favorites() {
     </div>
   );
 }
+
+export default Favorites;
