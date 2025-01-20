@@ -1,7 +1,7 @@
 // Header.tsx
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import tempLogo from "/vite.svg";
+import Logo from "/Logo.svg";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ function Header() {
     <header className="bg-primary text-white shadow-md">
       <div className="flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center space-x-2">
-          <img src={tempLogo} alt="Trail Tribe Logo" className="w-10 h-10" />
+          <img src={Logo} alt="Trail Tribe Logo" className="w-10 h-10" />
           <h1 className="text-xl font-bold">Trail Tribe</h1>
         </Link>
 
